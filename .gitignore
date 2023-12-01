@@ -1,160 +1,47 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+palavras = ["python", "hub"]
 
-# C extensions
-*.so
+matriz = """u l i o a
+e a p b e
+a r y l s
+j i t u a
+e e h u b
+e u o r r
+c t n e p
+b i o s b"""
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+linhas = [linha.replace(" ", "") for linha in matriz.split("\n")]
+print(linhas)  # ['ulioa', 'eapbe', 'aryls', ...]
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
+colunas = ["".join(coluna) for coluna in zip(*linhas)]
+print(colunas)  # ['ueajeecb', 'larieuti', 'ipythono' ...]
 
-# Translations
-*.mo
-*.pot
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+letras_a_mostrar = set()
 
-# Flask stuff:
-instance/
-.webassets-cache
 
-# Scrapy stuff:
-.scrapy
+for palavra in palavras:
+    for y, linha in enumerate(linhas):
+        if palavra in linha:
+            comeco_palavra = linha.find(palavra)
+            fim_palavra = linha.find(palavra) + len(palavra)
+            for x in range(comeco_palavra, fim_palavra):
+                letras_a_mostrar.add((x, y))
 
-# Sphinx documentation
-docs/_build/
+    for x, coluna in enumerate(colunas):
+        if palavra in coluna:
+            comeco_palavra = coluna.find(palavra)
+            fim_palavra = coluna.find(palavra) + len(palavra)
+            for y in range(comeco_palavra, fim_palavra):
+                letras_a_mostrar.add((x, y))
 
-# PyBuilder
-.pybuilder/
-target/
+print(letras_a_mostrar)  # {(2, 6), (4, 4), (2, 1), ... ]
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/#use-with-ide
-.pdm.toml
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+for y in range(len(linhas)):
+    for x in range(len(linhas[y])):
+        if (x, y) in letras_a_mostrar:
+            print(linhas[y][x] + " ", end="")
+        else:
+            print(". ", end="")
+    print("")
